@@ -34,6 +34,17 @@ app.get("/products", (req, res) => {
     });
 });
 
+app.get("/product/:productId", (req, res) => {
+  const { productId } = req.params;
+  Product.findOne({ _id: productId })
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
 app.post("/categories", (req, res) => {
   Category.insertMany(req.body)
     .then((results) => {
@@ -46,19 +57,14 @@ app.post("/categories", (req, res) => {
 
 app.get("/categories", async (req, res) => {
   const allCategories = await Category.find({});
-  const stringified = JSON.stringify(allCategories);
-  const parsed = [...JSON.parse(stringified)];
-  
-  res.send(results);
+  res.send(allCategories);
 });
 
 app.get("/categories/:categoryId", async (req, res) => {
   const { categoryId } = req.params;
-  const products = await Product.find({ category: categoryId });
-
   Category.findOne({ id: categoryId })
     .then((results) => {
-      res.send({ ...results.toObject(), items: products });
+      res.send(results);
     })
     .catch((error) => {
       res.send(error);
