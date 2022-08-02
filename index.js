@@ -1,12 +1,68 @@
 const express = require("express");
 const data = require("./data.json");
 var cors = require("cors");
+const { Product } = require("./models/products");
+const { Category } = require("./models/categories");
 
 const app = express();
+
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
   res.send(data);
+});
+
+app.post("/products", (req, res) => {
+  Product.insertMany(req.body)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.get("/products", (req, res) => {
+  Product.find({})
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/categories", (req, res) => {
+  Category.insertMany(req.body)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.get("/categories", async (req, res) => {
+  const allCategories = await Category.find({});
+  const stringified = JSON.stringify(allCategories);
+  const parsed = [...JSON.parse(stringified)];
+  
+  res.send(results);
+});
+
+app.get("/categories/:categoryId", async (req, res) => {
+  const { categoryId } = req.params;
+  const products = await Product.find({ category: categoryId });
+
+  Category.findOne({ id: categoryId })
+    .then((results) => {
+      res.send({ ...results.toObject(), items: products });
+    })
+    .catch((error) => {
+      res.send(error);
+    });
 });
 
 app.listen(5000, () => {
