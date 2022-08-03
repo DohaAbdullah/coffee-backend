@@ -15,9 +15,17 @@ app.get("/", function (req, res) {
 });
 
 app.post("/products", (req, res) => {
-  Product.insertMany(req.body)
+  const { category, item } = req.body;
+  Category.findOne({ id: category })
     .then((results) => {
-      res.send(results);
+      results.items.push(item);
+      results.save().then((saved) => {
+        res.send({
+          success: true,
+          message: "Product added successfully",
+          category: saved,
+        });
+      });
     })
     .catch((error) => {
       res.send(error);
