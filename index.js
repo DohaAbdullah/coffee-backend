@@ -25,7 +25,8 @@ app.post("/products", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-  Product.find({})
+  Category.find({})
+    .distinct("items")
     .then((results) => {
       res.send(results);
     })
@@ -36,9 +37,9 @@ app.get("/products", (req, res) => {
 
 app.get("/product/:productId", (req, res) => {
   const { productId } = req.params;
-  Product.findOne({ _id: productId })
+  Category.findOne({ "items._id": productId }, "items.$")
     .then((results) => {
-      res.send(results);
+      res.send(results.items[0]);
     })
     .catch((error) => {
       res.send(error);
