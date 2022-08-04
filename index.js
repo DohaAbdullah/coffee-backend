@@ -1,8 +1,8 @@
 const express = require("express");
 const data = require("./data.json");
 var cors = require("cors");
-const { Product } = require("./models/products");
 const { Category } = require("./models/categories");
+const { User } = require("./models/user");
 
 const app = express();
 
@@ -72,6 +72,35 @@ app.get("/categories", async (req, res) => {
 app.get("/categories/:categoryId", async (req, res) => {
   const { categoryId } = req.params;
   Category.findOne({ id: categoryId })
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/users", (req, res) => {
+  User.insertMany(req.body)
+    .then((results) => {
+      console.log(req.body);
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.get("/users", async (req, res) => {
+  const allUsers = await User.find({});
+  res.send(allUsers);
+  console.log("get users details");
+});
+
+app.get("/users/:userId", (req, res) => {
+  const { userId } = req.params;
+  console.log(req.params);
+  User.findOne({ id: userId })
     .then((results) => {
       res.send(results);
     })

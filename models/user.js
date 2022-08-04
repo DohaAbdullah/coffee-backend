@@ -21,6 +21,7 @@ const usersSchema = new Schema({
   phone: {
     type: Number,
     require: true,
+    minlength: 11,
   },
   address: String,
   city: String,

@@ -1,0 +1,62 @@
+[
+  {
+    "firstName": "Anas",
+    "lastName": "Bassam",
+    "email": "anas@gmail.com",
+    "password": "anas123",
+    "phone": "0505050543",
+    "address": "F6",
+    "city": "Islamabad",
+    "postalCode": "4400"
+  },
+  {
+    "firstName": "Doha",
+    "lastName": "Abdullah",
+    "email": "doha@gmail.com",
+    "password": "doha123",
+    "phone": "03050543",
+    "address": "E11",
+    "city": "Islamabad",
+    "postalCode": "4400"
+  },
+  {
+    "firstName": "Asia",
+    "lastName": "Hussain",
+    "email": "asia@gmail.com",
+    "password": "asia123",
+    "phone": "035050543",
+    "address": "G13",
+    "city": "Islamabad",
+    "postalCode": "4400"
+  },
+  {
+    "firstName": "Safwan",
+    "lastName": "Farhan",
+    "email": "safwan@gmail.com",
+    "password": "safwan123",
+    "phone": "033050543",
+    "address": "Nazimabad golimar",
+    "city": "Karachi",
+    "postalCode": "74000"
+  },
+  {
+    "firstName": "Hamza",
+    "lastName": "Abdullah",
+    "email": "hamza@gmail.com",
+    "password": "hamza123",
+    "phone": "03034458",
+    "address": "SchemeIII",
+    "city": "Rawalpindi",
+    "postalCode": "43000"
+  },
+  {
+    "firstName": "Jana",
+    "lastName": "Abdullah",
+    "email": "jana@gmail.com",
+    "password": "jana23",
+    "phone": "03034458",
+    "address": "DHA phase 5",
+    "city": "Lahore",
+    "postalCode": "51000"
+  }
+]
