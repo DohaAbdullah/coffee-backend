@@ -12,6 +12,7 @@ const usersSchema = new Schema({
   email: {
     type: String,
     require: true,
+    index: { unique: true, dropDups: true },
   },
   password: {
     type: String,
@@ -20,7 +21,7 @@ const usersSchema = new Schema({
   },
   phone: {
     type: Number,
-    require: true,
+
     minlength: 11,
   },
   address: String,

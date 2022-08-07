@@ -80,18 +80,24 @@ app.get("/categories/:categoryId", async (req, res) => {
     });
 });
 
-app.post("/users", (req, res) => {
-  User.insertMany(req.body)
+app.post("/user", (req, res) => {
+  console.log(req.body);
+  User.create(req.body)
     .then((results) => {
-      console.log(req.body);
       res.send(results);
+      console.log(results);
     })
     .catch((error) => {
       res.send(error);
     });
 });
 
-app.get("/users", async (req, res) => {
+app.post("/user/login", (req, res) => {
+ 
+});
+
+
+app.get("/users", async (req, res) => {//this endpoint for admin dashboard
   const allUsers = await User.find({});
   res.send(allUsers);
   console.log("get users details");
@@ -99,8 +105,18 @@ app.get("/users", async (req, res) => {
 
 app.get("/users/:userId", (req, res) => {
   const { userId } = req.params;
-  console.log(req.params);
   User.findOne({ id: userId })
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.get("/users/:userEmail", (req, res) => {
+  const { userEmail } = req.params;
+  User.findOne({ email: userEmail })
     .then((results) => {
       res.send(results);
     })
