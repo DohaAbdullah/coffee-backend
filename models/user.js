@@ -1,5 +1,7 @@
 const { Schema, model } = require("../database");
 
+
+
 const usersSchema = new Schema({
   firstName: {
     type: String,
@@ -11,17 +13,19 @@ const usersSchema = new Schema({
   },
   email: {
     type: String,
-    require: true,
     index: { unique: true, dropDups: true },
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: "Email address is required",
+   
   },
   password: {
     type: String,
     require: true,
-    minlength: 6,
   },
   phone: {
     type: Number,
-
     minlength: 11,
   },
   address: String,

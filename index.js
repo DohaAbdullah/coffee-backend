@@ -4,9 +4,10 @@ var cors = require("cors");
 const { Category } = require("./models/categories");
 const { User } = require("./models/user");
 const bcrypt = require("bcrypt");
+const validateIt = require("./validateIt");
+var validator = require("validator");
 
 const saltRounds = 10;
-
 const app = express();
 
 app.use(cors());
@@ -87,7 +88,6 @@ app.get("/categories/:categoryId", async (req, res) => {
 app.get("/users", async (req, res) => {
   const allUsers = await User.find({});
   res.send(allUsers);
-  console.log("get users details");
 });
 
 app.get("/users/:userId", (req, res) => {
@@ -95,6 +95,19 @@ app.get("/users/:userId", (req, res) => {
   User.findOne({ id: userId })
     .then((results) => {
       res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.delete("/user", (req, res) => {
+  User.deleteMany({ _id: req.body })
+    .then((results) => {
+      res.send({
+        success: true,
+        message: `${results.deletedCount} Users has been successfully deleted`,
+      });
     })
     .catch((error) => {
       res.send(error);
@@ -114,15 +127,29 @@ app.get("/users/:userEmail", (req, res) => {
 
 app.post("/user/register", (req, res) => {
   const { email, password, firstName, lastName } = req.body;
-  bcrypt.hash(password, saltRounds, function (err, hash) {
-    User.create({ email, password: hash, firstName, lastName })
-      .then((results) => {
-        res.send(results);
-      })
-      .catch((error) => {
-        res.send(error);
+  const validationErrors = validateIt(req.body);
+  if (validationErrors.length < 1) {
+    bcrypt.hash(password, saltRounds, function (err, hash) {
+      User.create({ email, password: hash, firstName, lastName })
+        .then((results) => {
+          res.send(results);
+        })
+        .catch((error) => {
+          res.status(403).send({
+            error: 403,
+            errorDescription: "Mongoose error",
+            errors: "This Email is used try another one!",
+          });
+        });
+    });
+  } else {
+    res
+      .status(401)
+      .send({
+        errorDescription: "Validation errors",
+        errors: validationErrors,
       });
-  });
+  }
 });
 
 app.post("/user/login", (req, res) => {
@@ -145,7 +172,7 @@ app.post("/user/login", (req, res) => {
             } else {
               res.status(401).send({
                 success: false,
-                message: "password or email is incorrect",
+                errors: "password or email is incorrect",
               });
             }
           }
@@ -154,6 +181,16 @@ app.post("/user/login", (req, res) => {
     })
     .catch((error) => {
       res.send({ errorDescription: "Database Error", error: error });
+    });
+});
+
+app.post("/allUsers", (req, res) => {
+  User.insertMany(req.body)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
     });
 });
 
