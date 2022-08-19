@@ -3,6 +3,7 @@ const data = require("./data.json");
 var cors = require("cors");
 const { Category } = require("./models/categories");
 const { User } = require("./models/user");
+const { Order } = require("./models/order");
 const bcrypt = require("bcrypt");
 const validateIt = require("./validateIt");
 var validator = require("validator");
@@ -143,12 +144,10 @@ app.post("/user/register", (req, res) => {
         });
     });
   } else {
-    res
-      .status(401)
-      .send({
-        errorDescription: "Validation errors",
-        errors: validationErrors,
-      });
+    res.status(401).send({
+      errorDescription: "Validation errors",
+      errors: validationErrors,
+    });
   }
 });
 
@@ -187,6 +186,18 @@ app.post("/user/login", (req, res) => {
 app.post("/allUsers", (req, res) => {
   User.insertMany(req.body)
     .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.post("/order", (req, res) => {
+  const orderId = String(Math.floor(Math.random() * 899999 + 100000));
+  Order.create({...req.body, orderId})
+    .then((results) => {
+      console.log(results);
       res.send(results);
     })
     .catch((error) => {

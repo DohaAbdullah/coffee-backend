@@ -1,0 +1,34 @@
+{
+    "orderId": "346789",
+    "products": [
+        {
+            "name": "Iced Caffè Mocha",
+            "ingrediants": [
+                "milk foam",
+                "espresso",
+                "steamed milk",
+                "hot chocolate"
+            ],
+            "description": "Take the first sip of many. Cold, refreshing, and delicious. Rinse and repeat whenever you get the craving",
+            "image": "/images/iced-mocha.webp",
+            "price": 650,
+            "currency": "Rs.",
+            "sizes": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "selectedSize": "small"
+        }
+    ],
+    "shippingInfo": {
+        "firstName": "ff",
+        "lastName": "ww",
+        "address": "ww",
+        "email": "rdd@gmail.com",
+        "phone": 0,
+        "city": "Kdd",
+        "postalCode": "ddfe4",
+        "pickupLocation": "www"
+    }
+}

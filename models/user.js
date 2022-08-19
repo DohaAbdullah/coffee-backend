@@ -1,7 +1,5 @@
 const { Schema, model } = require("../database");
 
-
-
 const usersSchema = new Schema({
   firstName: {
     type: String,
