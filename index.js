@@ -195,10 +195,44 @@ app.post("/allUsers", (req, res) => {
 
 app.post("/order", (req, res) => {
   const orderId = String(Math.floor(Math.random() * 899999 + 100000));
-  Order.create({...req.body, orderId})
+  Order.create({ ...req.body, orderId })
     .then((results) => {
       console.log(results);
       res.send(results);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
+});
+
+app.get("/orders", (req, res) => {
+  Order.find()
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.get("/order/:id", (req, res) => {
+  const { id } = req.params;
+  Order.findOne({ _id: id })
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.delete("/orders", (req, res) => {
+  Order.deleteMany({ _id: req.body })
+    .then((results) => {
+      res.send({
+        success: true,
+        message: `${results.deletedCount} orders has been successfully deleted`,
+      });
     })
     .catch((error) => {
       res.send(error);
