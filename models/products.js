@@ -13,6 +13,7 @@ const productsSchema = new Schema({
   sizes: Array,
   selectedSize: String,
   category: String,
+  quantity: Number,
 });
 
 const Product = model("products", productsSchema);

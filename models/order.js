@@ -32,9 +32,13 @@ const orderSchema = new Schema(
       city: String,
       postalCode: String,
     },
-    total: { type: String, default: "0.00" },
     status: { type: String, default: "New" },
     userID: String,
+    grandTotal: Number,
+    subTotal: { type: Number, default: 0 },
+    tax: { type: Number, default: 0 },
+    discountAmount: { type: Number, default: 0 },
+    discountCode: String,
   },
   { timestamps: true }
 );
