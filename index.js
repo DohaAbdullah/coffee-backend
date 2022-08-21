@@ -6,7 +6,7 @@ const { User } = require("./models/user");
 const { Order } = require("./models/order");
 const bcrypt = require("bcrypt");
 const validateIt = require("./validateIt");
-var validator = require("validator");
+const jwt = require("jsonwebtoken");
 
 const saltRounds = 10;
 const app = express();
@@ -167,7 +167,7 @@ app.post("/user/login", (req, res) => {
           results.password,
           function (err, compareResult) {
             if (compareResult === true) {
-              res.send({ success: true, results });
+              res.send({ success: true, token: results.createToken() });
             } else {
               res.status(401).send({
                 success: false,

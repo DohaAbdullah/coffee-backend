@@ -1,4 +1,5 @@
 const { Schema, model } = require("../database");
+const jwt = require("jsonwebtoken");
 
 const usersSchema = new Schema({
   firstName: {
@@ -16,7 +17,6 @@ const usersSchema = new Schema({
     lowercase: true,
     unique: true,
     required: "Email address is required",
-   
   },
   password: {
     type: String,
@@ -29,7 +29,20 @@ const usersSchema = new Schema({
   address: String,
   city: String,
   postalCode: String,
+  role: { type: String, default: "user" },
 });
+
+usersSchema.methods.createToken = function () {
+  const token = jwt.sign(
+    {
+      id: this._id,
+      email: this.email,
+      role: this.role,
+    },
+    "this is my fucking secret"
+  );
+  return token;
+};
 
 const User = model("users", usersSchema);
 
