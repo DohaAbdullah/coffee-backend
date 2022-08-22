@@ -33,7 +33,7 @@ const orderSchema = new Schema(
       postalCode: String,
     },
     status: { type: String, default: "New" },
-    userID: String,
+    userId: String,
     grandTotal: Number,
     subTotal: { type: Number, default: 0 },
     tax: { type: Number, default: 0 },

@@ -36,7 +36,6 @@ usersSchema.methods.createToken = function () {
   const token = jwt.sign(
     {
       id: this._id,
-      email: this.email,
       role: this.role,
     },
     "this is my fucking secret"
