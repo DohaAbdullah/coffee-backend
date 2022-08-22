@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
-  res.send(data);
+  res.send({ message: "Horrray! Server is running" });
 });
 
 app.post("/products", (req, res) => {
