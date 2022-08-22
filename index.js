@@ -93,7 +93,7 @@ app.get("/users", async (req, res) => {
 
 app.get("/users/:userId", (req, res) => {
   const { userId } = req.params;
-  User.findOne({ id: userId })
+  User.findOne({ _id: userId })
     .then((results) => {
       res.send(results);
     })
