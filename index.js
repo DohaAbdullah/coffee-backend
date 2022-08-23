@@ -7,6 +7,8 @@ const { Order } = require("./models/order");
 const bcrypt = require("bcrypt");
 const validateIt = require("./validateIt");
 const jwt = require("jsonwebtoken");
+import validator from "validator";
+
 
 const saltRounds = 10;
 const app = express();
@@ -129,6 +131,7 @@ app.get("/users/:userEmail", (req, res) => {
 app.post("/user/register", (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   const validationErrors = validateIt(req.body);
+  constnameisValid =  validator.isAlpha(req.body.firstName);
   if (validationErrors.length < 1) {
     bcrypt.hash(password, saltRounds, function (err, hash) {
       User.create({ email, password: hash, firstName, lastName })
