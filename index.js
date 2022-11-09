@@ -7,7 +7,7 @@ const { Order } = require("./models/order");
 const bcrypt = require("bcrypt");
 const validateIt = require("./validateIt");
 const jwt = require("jsonwebtoken");
-import validator from "validator";
+
 
 
 const saltRounds = 10;
